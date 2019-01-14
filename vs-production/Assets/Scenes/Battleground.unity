@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc924cad6a85945479f4f6cb4c494701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 1279162488}
   smoothing: 5
   initialFOV: 45
   actionFOV: 30
@@ -470,6 +470,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1676924250}
+  forward: {x: 0, y: 0, z: 0}
+  right: {x: 0, y: 0, z: 0}
+  movementSpeed: 4
 --- !u!4 &1435711025
 Transform:
   m_ObjectHideFlags: 0
@@ -546,3 +549,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2058442426 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100138, guid: 71bcc7aa1130a8f4eaaa952003521738,
+    type: 3}
+  m_PrefabInstance: {fileID: 1184977240}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2058442427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058442426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66aadfc9a25d6a0459393969fb087438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

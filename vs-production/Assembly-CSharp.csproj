@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Command.cs" />
      <Compile Include="Assets\Scripts\InputHandler.cs" />
+     <Compile Include="Assets\Scripts\PlayerAnimatorController.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>D:/Github/vs-production/vs-production/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
