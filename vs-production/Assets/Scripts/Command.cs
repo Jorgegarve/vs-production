@@ -8,13 +8,29 @@ namespace CommandPattern
 	public abstract class Command
 	{
 		public abstract void Execute (Transform objectTransform);
+
+		public virtual void Move (Transform objectTransform) { }
 	}
 
 	public class MoveForward : Command
 	{
 		public override void Execute (Transform objectTransform)
 		{
-			Debug.Log ("Doing MoveForwards");
+			Move (objectTransform);
+		}
+
+		public override void Move (Transform objectTransform) 
+		{
+			InputHandler.Instance.forward = Camera.main.transform.forward;
+			InputHandler.Instance.forward.y = 0;
+			InputHandler.Instance.forward = Vector3.Normalize (InputHandler.Instance.forward);
+
+			Vector3 upMovement = InputHandler.Instance.forward * InputHandler.Instance.movementSpeed * Time.deltaTime;
+			
+			Vector3 heading = Vector3.Normalize (upMovement);
+
+			objectTransform.forward = heading;
+			objectTransform.position += upMovement;
 		}
 	}
 
@@ -22,7 +38,21 @@ namespace CommandPattern
 	{
 		public override void Execute (Transform objectTransform)
 		{
-			Debug.Log ("Doing MoveBackwards");
+			Move (objectTransform);
+		}
+
+		public override void Move (Transform objectTransform) 
+		{
+			InputHandler.Instance.forward = Camera.main.transform.forward;
+			InputHandler.Instance.forward.y = 0;
+			InputHandler.Instance.forward = Vector3.Normalize (InputHandler.Instance.forward);
+
+			Vector3 upMovement = - InputHandler.Instance.forward * InputHandler.Instance.movementSpeed * Time.deltaTime;
+			
+			Vector3 heading = Vector3.Normalize (upMovement);
+
+			objectTransform.forward = heading;
+			objectTransform.position += upMovement;
 		}
 	}
 
@@ -30,7 +60,22 @@ namespace CommandPattern
 	{
 		public override void Execute (Transform objectTransform)
 		{
-			Debug.Log ("Doing MoveLeft");
+			Move (objectTransform);
+		}
+
+		public override void Move (Transform objectTransform) 
+		{
+			InputHandler.Instance.forward = Camera.main.transform.forward;
+			InputHandler.Instance.forward.y = 0;
+			InputHandler.Instance.forward = Vector3.Normalize (InputHandler.Instance.forward);
+			InputHandler.Instance.right = Quaternion.Euler (new Vector3(0, 90, 0)) * InputHandler.Instance.forward;
+
+			Vector3 rightMovement = - InputHandler.Instance.right * InputHandler.Instance.movementSpeed * Time.deltaTime;
+			
+			Vector3 heading = Vector3.Normalize (rightMovement);
+
+			objectTransform.forward = heading;
+			objectTransform.position += rightMovement;
 		}
 	}
 
@@ -38,7 +83,22 @@ namespace CommandPattern
 	{
 		public override void Execute (Transform objectTransform)
 		{
-			Debug.Log ("Doing MoveRight");
+			Move (objectTransform);
+		}
+
+		public override void Move (Transform objectTransform) 
+		{
+			InputHandler.Instance.forward = Camera.main.transform.forward;
+			InputHandler.Instance.forward.y = 0;
+			InputHandler.Instance.forward = Vector3.Normalize (InputHandler.Instance.forward);
+			InputHandler.Instance.right = Quaternion.Euler (new Vector3(0, 90, 0)) * InputHandler.Instance.forward;
+
+			Vector3 rightMovement = InputHandler.Instance.right * InputHandler.Instance.movementSpeed * Time.deltaTime;
+			
+			Vector3 heading = Vector3.Normalize (rightMovement);
+
+			objectTransform.forward = heading;
+			objectTransform.position += rightMovement;
 		}
 	}
 

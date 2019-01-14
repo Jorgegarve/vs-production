@@ -6,8 +6,38 @@ namespace CommandPattern
 {
     public class InputHandler : MonoBehaviour
     {
-        public Transform player;
         private Command buttonW, buttonS, buttonA, buttonD, buttonRMB, buttonESC;
+
+        public Transform player;
+
+        public Vector3 forward, right;
+		public float movementSpeed = 4f;
+
+        protected InputHandler () {}
+	    private static InputHandler instance = null;
+
+        public static InputHandler Instance {
+            get {
+                if (InputHandler.instance == null){
+                    DontDestroyOnLoad (InputHandler.instance);
+                    InputHandler.instance = new InputHandler ();
+                }
+                return InputHandler.instance;
+            }
+        }
+
+        public class EventData
+        {
+            public KeyCode keyCode = KeyCode.None;
+        }
+
+        private void Awake ()
+        {
+            if (instance == null)
+            {
+                instance = this;
+            }
+        }
 
         void Start ()
         {
@@ -26,27 +56,27 @@ namespace CommandPattern
 
         public void HandleInput ()
         {
-            if (Input.GetKeyDown (KeyCode.A))
+            if (Input.GetKey (KeyCode.A))
             {
                 buttonA.Execute (player);
             }
-            else if (Input.GetKeyDown (KeyCode.D))
+            if (Input.GetKey (KeyCode.D))
             {
                 buttonD.Execute (player);
             }
-            else if (Input.GetKeyDown (KeyCode.S))
+            if (Input.GetKey (KeyCode.S))
             {
                 buttonS.Execute (player);
             }
-            else if (Input.GetKeyDown (KeyCode.W))
+            if (Input.GetKey (KeyCode.W))
             {
                 buttonW.Execute (player);
             }
-            else if (Input.GetMouseButtonDown (1))
+            if (Input.GetMouseButtonDown (1))
             {
                 buttonRMB.Execute (player);
             }
-            else if (Input.GetKeyDown (KeyCode.Escape))
+            if (Input.GetKeyDown (KeyCode.Escape))
             {
                 buttonESC.Execute (player);
             }
