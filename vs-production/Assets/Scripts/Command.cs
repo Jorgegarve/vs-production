@@ -7,9 +7,24 @@ public abstract class Command
 {
 	public abstract void Execute (Transform objectTransform);
 
+	public virtual void Pause () { }
+
 	public virtual void Move (Transform objectTransform) { }
 
 	public virtual void Rotate (Transform objectTransform) { }
+}
+
+public class PauseGame : Command {
+
+	public override void Execute(Transform objectTransform) 
+	{
+		Pause ();
+	}
+
+	public override void Pause() 
+	{
+		GameManager.Instance.Pause ();
+	}
 }
 
 public class MoveForward : Command
@@ -26,11 +41,11 @@ public class MoveForward : Command
 		InputHandler.Instance.forward.y = 0;
 		InputHandler.Instance.forward = Vector3.Normalize (InputHandler.Instance.forward);
 
-		Vector3 upMovement = InputHandler.Instance.forward * InputHandler.Instance.movementSpeed * Time.deltaTime;
+		Vector3 upMovement = InputHandler.Instance.forward * InputHandler.Instance.movementSpeed * Time.unscaledDeltaTime;
 		
 		Vector3 heading = Vector3.Normalize (upMovement);
 
-		objectTransform.forward = heading;
+		objectTransform.forward += heading;
 		objectTransform.position += upMovement;
 	}
 }
@@ -49,11 +64,11 @@ public class MoveBackward : Command
 		InputHandler.Instance.forward.y = 0;
 		InputHandler.Instance.forward = Vector3.Normalize (InputHandler.Instance.forward);
 
-		Vector3 upMovement = - InputHandler.Instance.forward * InputHandler.Instance.movementSpeed * Time.deltaTime;
+		Vector3 upMovement = - InputHandler.Instance.forward * InputHandler.Instance.movementSpeed * Time.unscaledDeltaTime;
 		
 		Vector3 heading = Vector3.Normalize (upMovement);
 
-		objectTransform.forward = heading;
+		objectTransform.forward += heading;
 		objectTransform.position += upMovement;
 	}
 }
@@ -73,11 +88,11 @@ public class MoveLeft : Command
 		InputHandler.Instance.forward = Vector3.Normalize (InputHandler.Instance.forward);
 		InputHandler.Instance.right = Quaternion.Euler (new Vector3(0, 90, 0)) * InputHandler.Instance.forward;
 
-		Vector3 rightMovement = - InputHandler.Instance.right * InputHandler.Instance.movementSpeed * Time.deltaTime;
+		Vector3 rightMovement = - InputHandler.Instance.right * InputHandler.Instance.movementSpeed * Time.unscaledDeltaTime;
 		
 		Vector3 heading = Vector3.Normalize (rightMovement);
 
-		objectTransform.forward = heading;
+		objectTransform.forward += heading;
 		objectTransform.position += rightMovement;
 	}
 }
@@ -97,11 +112,11 @@ public class MoveRight : Command
 		InputHandler.Instance.forward = Vector3.Normalize (InputHandler.Instance.forward);
 		InputHandler.Instance.right = Quaternion.Euler (new Vector3(0, 90, 0)) * InputHandler.Instance.forward;
 
-		Vector3 rightMovement = InputHandler.Instance.right * InputHandler.Instance.movementSpeed * Time.deltaTime;
+		Vector3 rightMovement = InputHandler.Instance.right * InputHandler.Instance.movementSpeed * Time.unscaledDeltaTime;
 		
 		Vector3 heading = Vector3.Normalize (rightMovement);
 
-		objectTransform.forward = heading;
+		objectTransform.forward += heading;
 		objectTransform.position += rightMovement;
 	}
 }

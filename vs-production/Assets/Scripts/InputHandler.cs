@@ -6,12 +6,12 @@ using System.Collections.Generic;
 
 public class InputHandler : MonoBehaviour
 {
-    private Command buttonW, buttonS, buttonA, buttonD, buttonQ, buttonE, buttonRMB, buttonESC;
+    private Command buttonW, buttonS, buttonA, buttonD, buttonQ, buttonE, buttonSpace, buttonRMB, buttonESC;
 
     public Transform player;
 
     public Vector3 forward, right;
-    public float movementSpeed = 4f;
+    public float movementSpeed = 5f;
 
     public delegate void OnMoving ();
     public OnMoving onMoving;
@@ -48,6 +48,7 @@ public class InputHandler : MonoBehaviour
         buttonD = new MoveRight ();
         buttonQ = new RotateLeft ();
         buttonE = new RotateRight ();
+        buttonSpace = new PauseGame ();
         buttonRMB = new SelectAttackTarget ();
         buttonESC = new Cancel ();
     }
@@ -64,7 +65,7 @@ public class InputHandler : MonoBehaviour
             (Input.GetKey (KeyCode.W) && Input.GetKey (KeyCode.S)) || (Input.GetKey (KeyCode.A) && Input.GetKey (KeyCode.D)))
         {
             onIdle ();
-        } else
+        } else if (!GameManager.Instance.isGamePaused)
         {
             if (Input.GetKey (KeyCode.A))
             {
@@ -82,6 +83,10 @@ public class InputHandler : MonoBehaviour
             {
                 buttonW.Execute (player);
             }
+        }
+        if (Input.GetKeyDown (KeyCode.Space))
+        {
+            buttonSpace.Execute (player);
         }
         if (Input.GetKeyDown (KeyCode.E))
         {
