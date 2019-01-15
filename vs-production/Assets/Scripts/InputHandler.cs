@@ -83,6 +83,9 @@ public class InputHandler : MonoBehaviour
             {
                 buttonW.Execute (player);
             }
+        } else
+        {
+            onIdle ();
         }
         if (Input.GetKeyDown (KeyCode.Space))
         {
