@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using DG.Tweening;
 
 public abstract class Command
 {
@@ -9,7 +9,7 @@ public abstract class Command
 
 	public virtual void Move (Transform objectTransform) { }
 
-	public virtual void Event () { }
+	public virtual void Rotate (Transform objectTransform) { }
 }
 
 public class MoveForward : Command
@@ -103,6 +103,50 @@ public class MoveRight : Command
 
 		objectTransform.forward = heading;
 		objectTransform.position += rightMovement;
+	}
+}
+
+public class RotateLeft : Command
+{
+	private bool rotationFlag = false;
+
+	public override void Execute (Transform objectTransform)
+	{
+		Rotate (objectTransform);
+	}
+
+	public override void Rotate (Transform objectTransform) 
+	{
+		if (!rotationFlag) {
+
+			rotationFlag = true;
+			objectTransform.parent.DORotate (new Vector3 (objectTransform.parent.eulerAngles.x, Mathf.RoundToInt (objectTransform.parent.eulerAngles.y / 45) * 45 - 45f * - 1, objectTransform.parent.eulerAngles.z), 0.2f, RotateMode.Fast).SetUpdate (true).OnComplete (() => 
+			{ 
+				rotationFlag = false; 
+			});
+		}
+	}
+}
+
+public class RotateRight : Command
+{
+	private bool rotationFlag = false;
+
+	public override void Execute (Transform objectTransform)
+	{
+		Rotate (objectTransform);
+	}
+
+	public override void Rotate (Transform objectTransform) 
+	{
+		if (!rotationFlag) {
+
+			rotationFlag = true;
+			objectTransform.parent.DORotate (new Vector3 (objectTransform.parent.eulerAngles.x, Mathf.RoundToInt (objectTransform.parent.eulerAngles.y / 45) * 45 - 45f * 1, objectTransform.parent.eulerAngles.z), 0.2f, RotateMode.Fast).SetUpdate (true).OnComplete (() => 
+			{ 
+				rotationFlag = false; 
+			});
+		}
 	}
 }
 

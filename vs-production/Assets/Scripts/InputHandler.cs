@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class InputHandler : MonoBehaviour
 {
-    private Command buttonW, buttonS, buttonA, buttonD, buttonRMB, buttonESC;
+    private Command buttonW, buttonS, buttonA, buttonD, buttonQ, buttonE, buttonRMB, buttonESC;
 
     public Transform player;
 
@@ -46,6 +46,8 @@ public class InputHandler : MonoBehaviour
         buttonS = new MoveBackward ();
         buttonA = new MoveLeft ();
         buttonD = new MoveRight ();
+        buttonQ = new RotateLeft ();
+        buttonE = new RotateRight ();
         buttonRMB = new SelectAttackTarget ();
         buttonESC = new Cancel ();
     }
@@ -61,10 +63,8 @@ public class InputHandler : MonoBehaviour
         if ((!Input.GetKey (KeyCode.W) && !Input.GetKey (KeyCode.A) && !Input.GetKey (KeyCode.S) && !Input.GetKey (KeyCode.D)) ||
             (Input.GetKey (KeyCode.W) && Input.GetKey (KeyCode.S)) || (Input.GetKey (KeyCode.A) && Input.GetKey (KeyCode.D)))
         {
-            Debug.Log ("onIdle");
             onIdle ();
-        }
-        else
+        } else
         {
             if (Input.GetKey (KeyCode.A))
             {
@@ -82,6 +82,14 @@ public class InputHandler : MonoBehaviour
             {
                 buttonW.Execute (player);
             }
+        }
+        if (Input.GetKeyDown (KeyCode.E))
+        {
+            buttonQ.Execute (Camera.main.transform);
+        }
+        if (Input.GetKeyDown (KeyCode.Q))
+        {
+            buttonE.Execute (Camera.main.transform);
         }
         
         if (Input.GetMouseButtonDown (1))
