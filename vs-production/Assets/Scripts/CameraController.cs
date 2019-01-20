@@ -27,13 +27,25 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-
+        CheckCameraRotation ();
     }
 
     void LateUpdate () 
     {
         Vector3 targetCameraPosition = target.position;
         transform.parent.position = Vector3.Lerp (transform.parent.position, targetCameraPosition, smoothing * Time.unscaledDeltaTime);
+    }
+
+    public void CheckCameraRotation ()
+    {
+        if (!rotationFlag) {
+
+			rotationFlag = true;
+			transform.parent.DORotate (new Vector3 (transform.parent.eulerAngles.x, Mathf.RoundToInt (transform.parent.eulerAngles.y / 45) * 45 - 45f * Input.GetAxis("Camera Rotation"), transform.parent.eulerAngles.z), 0.2f, RotateMode.Fast).SetUpdate (true).OnComplete (() => 
+			{ 
+				rotationFlag = false; 
+			});
+		}
     }
 
     public void ChangeCameraTarget (Transform newTarget) 

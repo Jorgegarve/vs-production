@@ -9,6 +9,8 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
+    public CameraController cameraController;
+
     public delegate void OnStateChangeHandler ();
     public event OnStateChangeHandler OnStateChange;
     public GameState gameState { get; private set; }
@@ -39,7 +41,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        cameraController = FindObjectOfType<CameraController> ();
     }
 
     // Update is called once per frame

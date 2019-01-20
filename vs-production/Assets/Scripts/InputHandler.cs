@@ -11,7 +11,7 @@ public class InputHandler : MonoBehaviour
     public Transform player;
 
     public Vector3 forward, right;
-    public float movementSpeed = 5f;
+    public float movementSpeed = 6f;
 
     public delegate void OnMoving ();
     public OnMoving onMoving;

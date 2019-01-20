@@ -5,27 +5,49 @@ using UnityEngine;
 public class PlayerAnimatorController : MonoBehaviour
 {
     private Animator an;
+    private PlayerMovementController playerMovementController;
     // Start is called before the first frame update
     void Start()
     {
         an = GetComponent<Animator> ();
-        InputHandler.Instance.onIdle += OnIdle;
-        InputHandler.Instance.onMoving += OnMoving;
+        playerMovementController = GetComponent<PlayerMovementController> ();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        CheckMovementState ();
+    }
+
+    private void CheckMovementState ()
+    {
+        if (playerMovementController.IsWalking ())
+        {
+            OnWalking ();
+        } else if (playerMovementController.IsRunning ())
+        {
+            OnRunning ();
+        } else
+        {
+            OnIdle ();
+        }
     }
 
     private void OnIdle ()
     {
-        an.SetBool ("isMoving", false);
+        an.SetBool ("isWalking", false);
+        an.SetBool ("isRunning", false);
     }
 
-    private void OnMoving ()
+    private void OnWalking ()
     {
-        an.SetBool ("isMoving", true);
+        an.SetBool ("isWalking", true);
+        an.SetBool ("isRunning", false);
+    }
+
+    private void OnRunning ()
+    {
+        an.SetBool ("isWalking", false);
+        an.SetBool ("isRunning", true);
     }
 }
