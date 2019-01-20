@@ -17,11 +17,20 @@ public class PlayerMovementController : MonoBehaviour
 
     void Update()
     {
-        Move ();   
+        if (!GameManager.Instance.isGamePaused)
+        {
+            Move ();
+            CalculateVelocity ();
+        } else
+        {
+            Stop ();
+        }
+        
+        
     }
 
     private bool isMovementKeyPressed () {
-        if (Mathf.Abs(Input.GetAxis ("Horizontal")) >= 0.05 || Mathf.Abs(Input.GetAxis ("Vertical")) >= 0.05)
+        if (Mathf.Abs(Input.GetAxis ("Horizontal")) >= 0.1f || Mathf.Abs(Input.GetAxis ("Vertical")) >= 0.1f)
         {
             return true;
         } else
@@ -55,8 +64,16 @@ public class PlayerMovementController : MonoBehaviour
             moveDirection = moveDirection * speed;
         }
         moveDirection.y = moveDirection.y - (gravity * Time.deltaTime);
-    
         controller.Move (moveDirection * Time.deltaTime);
+    }
+
+    private void Stop ()
+    {
+        currentSpeed = 0;
+    }
+
+    private void CalculateVelocity ()
+    {
         currentSpeed = Vector3.SqrMagnitude (new Vector3 (Input.GetAxis ("Horizontal"), 0.0f, Input.GetAxis ("Vertical")) * speed);
     }
 

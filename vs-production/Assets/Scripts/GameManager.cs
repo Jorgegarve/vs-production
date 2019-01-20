@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public GameState gameState { get; private set; }
 
     public bool isGamePaused = false;
+    public float timeScale;
 
     protected GameManager () {}
 	private static GameManager instance = null;
@@ -66,10 +67,10 @@ public class GameManager : MonoBehaviour
 		isGamePaused = !isGamePaused;
         if (isGamePaused)
         {
-            Resume ();
+            SetTimeScale (0f);
         } else
         {
-            SetTimeScale (0f);
+            Resume ();
         }
 		
 	}
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
 	private void SetTimeScale (float timeScale)
 	{
 		Time.timeScale = timeScale;
+        Debug.Log ("Timescale: " + Time.timeScale);
 	}
 
 	public void OnApplicationQuit ()

@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     public float battleFOV = 30f;
     private float currentFOV = 0f;
 
-    private bool rotationFlag = false;
+    public bool rotationFlag = false;
 
     private Vector3 offset;
 
@@ -41,11 +41,11 @@ public class CameraController : MonoBehaviour
         if (!rotationFlag) {
 
 			rotationFlag = true;
-			transform.parent.DORotate (new Vector3 (transform.parent.eulerAngles.x, Mathf.RoundToInt (transform.parent.eulerAngles.y / 45) * 45 - 45f * Input.GetAxis("Camera Rotation"), transform.parent.eulerAngles.z), 0.2f, RotateMode.Fast).SetUpdate (true).OnComplete (() => 
+			transform.parent.DORotate (new Vector3 (transform.parent.eulerAngles.x, Mathf.RoundToInt (transform.parent.eulerAngles.y / 45) * 45 - 45f * Input.GetAxisRaw ("Camera Rotation"), transform.parent.eulerAngles.z), 0.2f, RotateMode.Fast).SetUpdate (true).OnComplete (() => 
 			{ 
 				rotationFlag = false; 
 			});
-		}
+        } 
     }
 
     public void ChangeCameraTarget (Transform newTarget) 

@@ -33,19 +33,19 @@ public class PlayerAnimatorController : MonoBehaviour
         }
     }
 
-    private void OnIdle ()
+    public void OnIdle ()
     {
         an.SetBool ("isWalking", false);
         an.SetBool ("isRunning", false);
     }
 
-    private void OnWalking ()
+    public void OnWalking ()
     {
         an.SetBool ("isWalking", true);
         an.SetBool ("isRunning", false);
     }
 
-    private void OnRunning ()
+    public void OnRunning ()
     {
         an.SetBool ("isWalking", false);
         an.SetBool ("isRunning", true);
