@@ -6,28 +6,41 @@ using DG.Tweening;
 public class CameraController : MonoBehaviour
 {
     public Transform target;
+    public Camera camera;
 
     public float smoothing = 5f;
+
+    public bool rotationFlag = false;
+
+    public bool isFocusing = false;
 
     public float initialFOV = 45f;
     public float actionFOV = 30f;
     public float battleFOV = 30f;
     private float currentFOV = 0f;
 
-    public bool rotationFlag = false;
-
     private Vector3 offset;
 
     // Start is called before the first frame update
     void Start ()
     {
-        initialFOV = GetComponent<Camera> ().fieldOfView;
+        camera = GetComponent<Camera> ();
+        initialFOV = camera.fieldOfView;
+        currentFOV = initialFOV;
     }
 
     // Update is called once per frame
     void Update ()
     {
         CheckCameraRotation ();
+
+        if (isFocusing)
+        {
+            FocusOnAction ();
+        } else
+        {
+            UnFocusOnAction ();
+        }
     }
 
     void LateUpdate () 
@@ -53,21 +66,26 @@ public class CameraController : MonoBehaviour
         target = newTarget;
     }
 
+    public void TriggerCameraFocus ()
+    {
+        isFocusing = !isFocusing;
+    }
+
     public void FocusOnAction ()
     {
         currentFOV = Mathf.Lerp (currentFOV, actionFOV, smoothing * Time.unscaledDeltaTime);
-        GetComponent<Camera> ().fieldOfView = currentFOV;
+        camera.fieldOfView = currentFOV;
     }
 
     public void FocusOnBattle ()
     {  
         currentFOV = Mathf.Lerp (currentFOV, battleFOV, smoothing * Time.unscaledDeltaTime);
-        GetComponent<Camera> ().fieldOfView = currentFOV;
+        camera.fieldOfView = currentFOV;
     }
 
     public void UnFocusOnAction ()
     {
         currentFOV = Mathf.Lerp (currentFOV, initialFOV, smoothing * Time.unscaledDeltaTime);
-        GetComponent<Camera> ().fieldOfView = currentFOV;
+        camera.fieldOfView = currentFOV;
     }
 }

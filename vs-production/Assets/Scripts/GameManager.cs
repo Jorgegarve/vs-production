@@ -9,6 +9,7 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
+    public Transform player;
     public CameraController cameraController;
 
     public delegate void OnStateChangeHandler ();

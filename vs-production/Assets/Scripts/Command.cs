@@ -13,7 +13,6 @@ public class PauseGame : Command {
 	public override void Execute(Transform objectTransform) 
 	{
 		GameManager.Instance.Pause ();
-		objectTransform.GetComponent<PlayerAnimatorController> ().OnIdle ();
 	}
 }
 
@@ -21,8 +20,10 @@ public class SelectAttackTarget : Command
 {
 	public override void Execute (Transform objectTransform)
 	{
-		Debug.Log ("Doing SelectAttackTarget");
 		GameManager.Instance.Pause ();
+		GameManager.Instance.cameraController.TriggerCameraFocus ();
+		CombatSystemManager.Instance.TriggerRangeSphere ();
+		objectTransform.GetComponent<PlayerAnimatorController> ().OnIdle ();
 	}
 }
 
